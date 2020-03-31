@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+ 
+{% block title %}
+    {{ diary['date'] }}
+{% endblock %}
+
+{% block main %}
+        <div class ="diary p-5 m-3">
+
+        <!-- Title -->
+        <h1>{{ diary['title'] }}</h1>
+        <p class="lead">
+            by
+            <a href="{{ url_for('profile', username=username) }}">{{ username }}</a>
+            <form action="{{ url_for('download_diary') }}" method="post">
+              <input type="hidden" name="username" value="{{ username }}">
+              <input type="hidden" name="date" value="{{ diary['date'] }}">
+              <button class="btn btn-primary" type="submit">Download</button>
+          </form>
+          </p>
+        <hr>
+
+        <!-- Date/Time -->
+            <h4>{{ diary['date']|date_format }}</h4>
+        <p>That day was {{ diary['rating'] }}.</p>
+
+        <hr>
+        <!-- Post Content -->
+        <div style="text-align: left;">
+        {{ diary['diary']|clean_markdown|safe }}
+      </div>
+      </div>
+{% endblock %}

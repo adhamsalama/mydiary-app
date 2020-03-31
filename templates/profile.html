@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ info['username'] }}
+{% endblock %}
+
+{% block head %}
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+        <h1 class="display-4">{{ info['username'] }}</h1>
+        <p class="lead">Email:
+            {{ info['email'] }}
+            <br>
+            Account created on: {{ info['registeration'] }}
+            <br>
+            Visibility: {% if info['visibility'] == '0' %}
+                            Private.
+                        {% else %}
+                            Public.
+                        {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block main %}
+
+{% if diaries %}
+    {% for diary in diaries %}
+        <a href=" {{ url_for('diary_page', username=info['username'], date=diary['date']) }}">
+            <div class="alert alert-primary" role="alert">
+                <h4 class="alert-heading">{{ diary['date'] }}</h4>
+                
+                <p>{{ diary['title'] }}, that day was <span class="rating">{{ diary['rating'] }}</span></p>       
+            </div>
+        </a>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-primary" role="alert">
+        You didn't write any diaries.
+    </div>
+{% endif %}
+{% endblock %}

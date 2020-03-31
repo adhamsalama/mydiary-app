@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block head %}
+<div class="jumbotron text-center" style="display: block;">
+    <h1 class="display-4">Welcome!</h1>
+    <p class="lead">Here you can write your diaries!</p>
+  </div>
+{% endblock %}
+{% block main %}
+
+    <div class="container p-5">
+        <h4>Write your diary in text/md</h4>
+        <form class="needs-validation" id="submit_diary" action="{{ url_for('add_diary') }}" novalidate autocomplete="off" method="post">
+            <div class="form-group mb-2">
+                <input autocomplete="off" autofocus class="form-control small-form" name="title" placeholder="Title of the day" type="text">
+            </div>
+            <div class="form-group">
+                <select class="custom-select form-control small-form" name="rating" required>
+                    <option value="" disabled selected>How was your day?</option>
+                    <option value="amazing">Amazing</option>
+                    <option value="good">Good</option>
+                    <option value="average">Average</option>
+                    <option value="bad">Bad</option>
+                    <option value="terrible">Terrible</option>
+                </select>
+                <div class="invalid-feedback">Please select how your day was.</div>
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" placeholder="So, what happened today?" name="diary" required></textarea>
+                <div class="invalid-feedback">Please write your diary.</div>
+    </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <input type="hidden" name="today_date" value="">
+    </form>
+
+    </div>
+<script src="/static/validation.js"></script>
+<script>
+    let d = new Date();
+    let today_date = d.getFullYear().toString() + '-' + (d.getMonth() + 1).toString() + '-' + d.getDate().toString();
+
+    document.querySelector("#submit_diary").onsubmit = function () {
+        document.querySelector("input[name='today_date']").value = today_date;
+        return true;
+    }
+</script>
+{% endblock %}

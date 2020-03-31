@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Public Diaries
+{% endblock %}
+
+{% block head %}
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+        <h1 class="display-4">Results</h1>
+        <p class="lead">Number of results: {{ diaries|length }}</p>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+{% if diaries %}
+    {% for diary in diaries %}
+        <a href=" {{ url_for('diary_page', username=diary['username'], date=diary['date']) }}">
+            <div class="alert alert-primary" role="alert">
+                <h4 class="alert-heading">{{ diary['date'] }}</h4>
+                <p>
+                    {{ diary['title'] }}, that day was <span class="rating">{{ diary['rating'] }}</span>
+                    <br>
+                    by <a href="{{ url_for('profile', username=diary['username']) }}">{{ diary['username'] }}</a>.
+                </p>       
+            </div>
+        </a>
+    {% endfor %}
+
+{% else %}
+    <div class="alert alert-danger" role="alert">
+            No diaries found.
+    </div>
+{% endif %}
+
+{% endblock %}
