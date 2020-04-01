@@ -27,7 +27,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Set up database
-engine = create_engine("sqlite:///tables.db?""check_same_thread=False")
+engine = create_engine(os.getenv('DATABASE_URL'))
 db = scoped_session(sessionmaker(bind=engine))
 
 
@@ -115,7 +115,8 @@ def search():
     q = request.args.get('q')
     if not q:
         return error_page('Please enter something to search.')
-    diaries = db.execute("SELECT * FROM diaries WHERE user_id = :id AND (title LIKE :q OR date LIKE :q OR rating LIKE :q OR diary LIKE :q) ORDER BY date DESC",
+    q = q.strip()
+    diaries = db.execute("SELECT * FROM diaries WHERE user_id = :id AND (title ILIKE :q OR date ILIKE :q OR rating ILIKE :q OR diary ILIKE :q) ORDER BY date DESC",
                           {"id": session["user_id"], "q": "%" + q + "%"}).fetchall()
     return render_template("results.html", diaries=diaries)
 
