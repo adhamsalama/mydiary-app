@@ -42,6 +42,7 @@ def login_required(f):
 
 
 def send_email(receiver, name, subject, message):
+    """Sends an email"""
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
     server.login(os.getenv("email"), os.getenv("password"))
@@ -49,11 +50,13 @@ def send_email(receiver, name, subject, message):
 
 
 def date_format(date_):
-    from datetime import datetime
-    date_ = date_.split('-')
-    return datetime(int(date_[0]), int(date_[1]), int(date_[2])).strftime("%A %b %d %Y")
+    """Formats a date"""
+
+    return date_.strftime("%A %b %d %Y")
 
 
 
 def clean_markdown(note):
+    """Cleans a markdown text then turns it into html"""
+
     return markdown(bleach.clean(note))
