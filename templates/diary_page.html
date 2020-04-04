@@ -12,7 +12,7 @@
         <p class="lead">
             by
             <a href="{{ url_for('profile', username=username) }}">{{ username }}</a>
-            <form action="{{ url_for('download_diary') }}" method="post">
+            <form action="{{ url_for('diary.download_diary') }}" method="post">
               <input type="hidden" name="username" value="{{ username }}">
               <input type="hidden" name="date" value="{{ diary['date'] }}">
               <button class="btn btn-primary" type="submit">Download</button>

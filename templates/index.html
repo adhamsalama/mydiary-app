@@ -14,7 +14,7 @@ Home
 
     <div class="container p-5">
         <h4>Write your diary in text/md</h4>
-        <form class="needs-validation" id="submit_diary" action="{{ url_for('add_diary') }}" novalidate autocomplete="off" method="post">
+        <form class="needs-validation" id="submit_diary" action="{{ url_for('diary.add_diary') }}" novalidate autocomplete="off" method="post">
             <div class="form-group mb-2">
                 <input autocomplete="off" autofocus class="form-control small-form" name="title" placeholder="Title of the day" type="text">
             </div>
