@@ -15,7 +15,7 @@ Public Diaries
 {% block main %}
 {% if diaries %}
     {% for diary in diaries %}
-        <a href=" {{ url_for('diary_page', username=diary['username'], date=diary['date']) }}">
+        <a href=" {{ url_for('diary.diary_page', username=diary['username'], date=diary['date']) }}">
             <div class="alert alert-primary" role="alert">
                 <h4 class="alert-heading">{{ diary['date'] }}</h4>
                 <p>
