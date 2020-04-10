@@ -4,7 +4,16 @@ from flask import redirect, render_template, request, session
 from functools import wraps
 import bleach
 from markdown import markdown
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
+
+def connectdb():
+    """Connects to a db"""
+
+    engine = create_engine(os.getenv('DATABASE_URL'))
+    db = scoped_session(sessionmaker(bind=engine))
+    return db
 
 
 def apology(message, code=400):
