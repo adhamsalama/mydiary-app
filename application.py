@@ -1,13 +1,7 @@
-import os
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, send_file, Blueprint
 from flask_session import Session
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
-import sqlite3
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-
-from helpers import apology, login_required, send_email, error_page, date_format, clean_markdown
-
+from helpers import *
 
 from auth.routes import auth
 from diary.routes import diary
@@ -36,8 +30,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Set up database
-engine = create_engine(os.getenv('DATABASE_URL'))
-db = scoped_session(sessionmaker(bind=engine))
+db = connectdb()
 
 
 app.jinja_env.filters['clean_markdown'] = clean_markdown

@@ -1,17 +1,14 @@
-import os
 from flask import Blueprint, request, render_template, flash, url_for
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from helpers import *
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 settings = Blueprint('settings', __name__)
 
-engine = create_engine(os.getenv('DATABASE_URL'))
-db = scoped_session(sessionmaker(bind=engine))
+db = connectdb()
+
 
 @settings.route("/settings/change_visibility")
 @login_required
@@ -25,6 +22,7 @@ def change_visibility():
     db.commit()
     flash('Visibility Changed!')
     return redirect(url_for('profile', username=session['username']))
+
 
 @settings.route("/settings/change_password", methods=["GET", "POST"])
 @login_required
